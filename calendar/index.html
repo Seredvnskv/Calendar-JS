@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <title>Calendar</title>
+</head>
+<body>
+    <div class="calendar">
+        <div class="calendar-header">
+            <button id="prev-month">&lt;</button>
+            <h3 id="month-year"></h3>
+            <button id="next-month">&gt;</button>
+        </div>
+        <div class="calendar-grid"></div>
+    </div>
+
+    <div class="modal hidden" id="event-all">
+        <button class="close-modal">&times;</button>
+        <button class="add">+</button>
+        <div class="all-events"></div>
+    </div>
+
+    <div class="modal hidden" id="event-add">
+        <button class="close-modal">&times;</button>
+        <h3>Add Event</h3>
+        <input class="event" id="event-title" placeholder="Enter event title" type="text">
+        <h4>Choose event background color</h4>
+        <div class="button-colors">
+            <button id='red' class="red" aria-label="Red"></button>
+            <button id='blue' class="blue" aria-label="Blue"></button>
+            <button id='purple' class="purple" aria-label="Purple"></button>
+            <button id='green' class="green" aria-label="Green"></button>
+            <button id='pink' class="pink" aria-label="Pink"></button>
+        </div>
+        <button id="submit">Submit</button>
+    </div>
+
+    <div class="modal hidden" id="event-edit">
+        <button class="close-modal">&times;</button>
+        <h3>Edit Event</h3>
+        <input class="event" id="edit-event-title" placeholder="Edit event title" type="text">
+        <h4>Choose event background color</h4>
+        <div class="button-colors">
+            <button id='red' class="red" aria-label="Red"></button>
+            <button id='blue' class="blue" aria-label="Blue"></button>
+            <button id='purple' class="purple" aria-label="Purple"></button>
+            <button id='green' class="green" aria-label="Green"></button>
+            <button id='pink' class="pink" aria-label="Pink"></button>
+        </div>
+        <button id="event-edit-button">Edit</button>
+    </div>
+
+    <div class="overlay hidden"></div>
+    <script src="script.js"></script>
+</body>
+</html>
