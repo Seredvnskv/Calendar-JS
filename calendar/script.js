@@ -14,7 +14,7 @@ const add = document.querySelector('.add');
 const editEventModal = document.getElementById('event-edit');
 const edit = document.getElementById('event-edit-button');
 
-const events = {}; 
+const events = loadEvents();
 
 let currentDate = new Date();
 let calendarDays = getAllDays();
@@ -65,12 +65,22 @@ function renderDays(date) {
     }
 }
 
+function loadEvents() {
+    const storedEvents = localStorage.getItem('events');
+    return storedEvents ? JSON.parse(storedEvents) : {};
+}
+
+function saveEvents() {
+    localStorage.setItem('events', JSON.stringify(events));
+}
+
 function addEvent(date, eventTitle, eventColor) {
     if (!events[date]) {
-        events[date] = []; 
+        events[date] = [];
     }
 
-    events[date].push({title: eventTitle, color: eventColor}); 
+    events[date].push({ title: eventTitle, color: eventColor });
+    saveEvents();
 }
 
 function viewAllEvents() {
@@ -85,19 +95,20 @@ function viewAllEvents() {
 }
 
 function deleteEvent(date, index) {
-    events[date].splice(index, 1); 
+    events[date].splice(index, 1);
 
     if (events[date].length === 0) {
         delete events[date];
     }
 
+    saveEvents();
     closeAllModals();
     openEventModal(date);
     renderCalendar(currentDate);
 }
 
 function configureEvent(date, index) {
-    const event = (events[date])[index]; 
+    const event = (events[date])[index];
 
     showModal(editEventModal);
 
@@ -108,9 +119,10 @@ function configureEvent(date, index) {
         event.title = title;
         event.color = color;
 
+        saveEvents();
         closeAllModals();
         renderCalendar(currentDate);
-    }); 
+    });
 }
 
 function createEvents(dayEvents) {
@@ -169,16 +181,16 @@ function renderCalendar(date) {
 
     calendarDays.forEach((day) => {
         const dayDate = day.getAttribute('data-date');
-        
+
         if (events[dayDate]) {
             const eventHolder = day.querySelector('.event-holder');
-            const color = (events[dayDate])[events[dayDate].length - 1].color; 
+            const color = (events[dayDate])[events[dayDate].length - 1].color;
             const html = `<div class="events-number ${color}">${events[dayDate].length}</div>`;
             eventHolder.innerHTML = html;
         }
 
-        day.addEventListener('click', function() {
-            selectedDay = day; 
+        day.addEventListener('click', function () {
+            selectedDay = day;
             const date = selectedDay.getAttribute('data-date');
             openEventModal(date);
         });
